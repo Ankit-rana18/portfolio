@@ -1,0 +1,24 @@
+{
+ "count": 100000,
+ "scale": 0.000125,
+ "layout": [
+  "int16 xyz",
+  "int8 nx,ny",
+  "uint8 lum,region,edge"
+ ],
+ "regions": {
+  "0": "face",
+  "1": "hair",
+  "2": "skin",
+  "3": "clothes",
+  "4": "halo",
+  "5": "back"
+ },
+ "bounds": {
+  "minY": -2.9728324526595706,
+  "maxY": 1.4219224131769403,
+  "minX": -2.1964883908785384,
+  "maxX": 2.572811747158351
+ },
+ "source": "3.jpg"
+}

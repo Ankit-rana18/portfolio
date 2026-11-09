@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0c0c0c;
+  --color-fg: #d7e2ea;
+  --color-violet: #b9b2ff;
+
+  --font-sans: var(--font-kanit), "Kanit", sans-serif;
+  --font-heading: var(--font-instrument), "Instrument Serif", serif;
+  --font-body: var(--font-barlow), "Barlow", sans-serif;
+}
+
+@layer components {
+  /* Liquid glass pill with a thin gradient border that fades out mid-side */
+  .liquid-glass-strong {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: none;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass-strong::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0.5) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Everyday liquid glass for cards, tiles and pills: frosted, slightly tinted,
+     gradient rim, and a soft sheen that glides across on hover. */
+  .liquid-glass {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 45%, rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.14),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.04),
+      0 24px 48px -28px rgba(0, 0, 0, 0.7);
+  }
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 22%, rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0) 60%, rgba(185, 178, 255, 0.18) 85%, rgba(79, 216, 255, 0.35) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .liquid-glass::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 45%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+    transform: skewX(-18deg);
+    transition: left 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .liquid-glass:hover::after { left: 120%; }
+  @media (prefers-reduced-motion: reduce) {
+    .liquid-glass::after { display: none; }
+  }
+}
+
+/* Box-sizing + margin/padding reset come from Tailwind's preflight (kept in its base layer
+   so utility classes still win). */
+
+html {
+  background: #0c0c0c;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: #0c0c0c;
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: rgba(182, 0, 168, 0.45); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------ What I do: capability cards */
+@property --cap-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.cap-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 32px;
+  /* frosted glass: the data landscape behind shows through, blurred */
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(124, 92, 255, 0.12), transparent 60%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015) 40%),
+    linear-gradient(180deg, rgba(20, 21, 28, 0.55), rgba(12, 12, 14, 0.62));
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+}
+/* fine static border */
+.cap-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(215, 226, 234, 0.22), rgba(215, 226, 234, 0.05) 40%, rgba(215, 226, 234, 0.12));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+/* sweeping gradient border, shown on hover/focus */
+.cap-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--cap-angle), transparent 0deg, #4fd8ff 60deg, #b600a8 140deg, #7621b0 200deg, transparent 280deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: cap-spin 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.cap-card:hover::after,
+.cap-card:focus-within::after { opacity: 1; }
+@keyframes cap-spin { to { --cap-angle: 360deg; } }
+
+/* animated technical visuals */
+.viz-pulse { stroke-dasharray: 6 220; animation: viz-flow 2.8s linear infinite; }
+.viz-flow { stroke-dasharray: 3 9; animation: viz-flow 1.6s linear infinite; }
+.viz-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: viz-draw 5s ease-in-out infinite; }
+.viz-breathe { animation: viz-breathe 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.viz-scan { animation: viz-scan 3.6s ease-in-out infinite; }
+.viz-blink { animation: viz-blink 3.6s ease-in-out infinite; }
+.viz-float { animation: viz-float 6s ease-in-out infinite; }
+@keyframes viz-flow { to { stroke-dashoffset: -226; } }
+@keyframes viz-draw { 0% { stroke-dashoffset: 600; } 55%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -600; } }
+@keyframes viz-breathe { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
+@keyframes viz-scan { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(96px); } }
+@keyframes viz-blink { 0%, 30%, 100% { opacity: 0.25; } 45%, 70% { opacity: 1; } }
+@keyframes viz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cap-card::after, .viz-pulse, .viz-flow, .viz-draw, .viz-breathe, .viz-scan, .viz-blink, .viz-float { animation: none; }
+  .viz-draw { stroke-dashoffset: 0; }
+}
+
+/* Gradient heading text */
+.hero-heading {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
